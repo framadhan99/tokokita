@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tokokita/ui/page/registrasi_page.dart';
 import 'package:tokokita/ui/widget/general_textfield.dart';
 
 class LoginPage extends StatefulWidget {
@@ -24,17 +25,41 @@ class _LoginPageState extends State<LoginPage> {
             GeneralTextField(
               controller: emailTextController,
               label: "Email",
+              validator: (String? value) {
+                if (value != null && value.isEmpty) {
+                  return "Email harus di isi";
+                }
+                return null;
+              },
             ),
             // _passwordField
             GeneralTextField(
               controller: passwordController,
               label: "Password",
+              validator: (String? value) {
+                if (value != null && value.isEmpty) {
+                  return "Password harus di isi";
+                }
+                return null;
+              },
             ),
             SizedBox(
               height: 30,
             ),
             // Button Registrasi
-            ElevatedButton(onPressed: () {}, child: Text("Login"))
+            ElevatedButton(onPressed: () {}, child: Text("Login")),
+            SizedBox(
+              height: 30,
+            ),
+            TextButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RegistrasiPage(),
+                      ));
+                },
+                child: Text("Register"))
           ],
         ),
       ),
