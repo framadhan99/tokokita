@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tokokita/ui/page/produk/produk_page.dart';
 import 'package:tokokita/ui/page/registrasi_page.dart';
 import 'package:tokokita/ui/widget/general_textfield.dart';
 
@@ -47,7 +48,15 @@ class _LoginPageState extends State<LoginPage> {
               height: 30,
             ),
             // Button Registrasi
-            ElevatedButton(onPressed: () {}, child: Text("Login")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProdukPage(),
+                      ));
+                },
+                child: Text("Login")),
             SizedBox(
               height: 30,
             ),

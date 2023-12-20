@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tokokita/model/list_produk.dart';
 import 'package:tokokita/model/produk.dart';
+import 'package:tokokita/ui/page/produk/detail_produk_page.dart';
 import 'package:tokokita/ui/page/produk/produk_form_page.dart';
 import 'package:tokokita/ui/widget/item_produk_widget.dart';
 
@@ -8,6 +10,7 @@ class ProdukPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ProdukList produk = ProdukList();
     return Scaffold(
       appBar: AppBar(
         title: Text("List Produk"),
@@ -35,26 +38,26 @@ class ProdukPage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          ItemProduk(
-            produk: Produk(
-                id: 1,
-                kodeProduk: "0001",
-                namaProduk: "Kamera",
-                hargaProduk: 5000000),
-          ),
-          ItemProduk(
-            produk: Produk(
-                id: 2,
-                kodeProduk: "0002",
-                namaProduk: "Kulkas",
-                hargaProduk: 2500000),
-          ),
-          ItemProduk(
-            produk: Produk(
-                id: 3,
-                kodeProduk: "0003",
-                namaProduk: "Mesin Cuci",
-                hargaProduk: 2000000),
+          ...List.generate(
+            produk.listProduk.length,
+            (index) => ItemProduk(
+              produk: Produk(
+                id: produk.listProduk[index].id,
+                kodeProduk: produk.listProduk[index].kodeProduk,
+                namaProduk: produk.listProduk[index].namaProduk,
+                hargaProduk: produk.listProduk[index].hargaProduk,
+              ),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailProdukPage(
+                        produk: produk,
+                        index: index,
+                      ),
+                    ));
+              },
+            ),
           )
         ],
       ),

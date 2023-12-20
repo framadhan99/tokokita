@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 
+import 'package:tokokita/model/list_produk.dart';
+
 class DetailProdukPage extends StatelessWidget {
-  const DetailProdukPage({super.key});
+  const DetailProdukPage({
+    Key? key,
+    required this.produk,
+    required this.index,
+  }) : super(key: key);
+
+  final ProdukList produk;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -14,15 +23,15 @@ class DetailProdukPage extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  "Kode :",
+                  "Kode : ${produk.listProduk[index].id}",
                   style: TextStyle(fontSize: 24),
                 ),
                 Text(
-                  "Nama :",
+                  "Nama : ${produk.listProduk[index].namaProduk}",
                   style: TextStyle(fontSize: 24),
                 ),
                 Text(
-                  "Harga :",
+                  "Harga :${produk.listProduk[index].hargaProduk}",
                   style: TextStyle(fontSize: 24),
                 ),
                 SizedBox(

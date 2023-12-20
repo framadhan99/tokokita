@@ -1,4 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:tokokita/model/list_produk.dart';
+import 'package:tokokita/model/produk.dart';
 import 'package:tokokita/ui/widget/general_textfield.dart';
 
 class ProdukFormPage extends StatelessWidget {
@@ -38,7 +42,24 @@ class ProdukFormPage extends StatelessWidget {
             SizedBox(
               height: 30,
             ),
-            ElevatedButton(onPressed: () {}, child: Text("Save"))
+            ElevatedButton(
+              onPressed: () {
+                var id = Random();
+                ProdukList listProduk = ProdukList();
+
+                Produk produk = Produk(
+                  id: id.nextInt(100),
+                  kodeProduk: kodeProdukController.text,
+                  namaProduk: namaProdukController.text,
+                  hargaProduk: int.parse(hargaProdukController.text),
+                );
+
+                listProduk.listProduk.add(produk);
+
+                Navigator.pop(context);
+              },
+              child: Text("Save"),
+            )
           ],
         ),
       ),
