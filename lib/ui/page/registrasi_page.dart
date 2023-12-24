@@ -18,48 +18,26 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
   TextEditingController konfirmasiPasswordTextboxController =
       TextEditingController();
   bool _isLoading = false;
-  void _submit() {
-    setState(() {
-      _isLoading = true;
-    });
-    RegistrasiBloc.registrasi(
-            name: namaTextboxController.text,
-            email: emailTextboxController.text,
-            password: passwordTextboxController.text)
-        .then((value) {
-      // Sukses Dialog
-      return showDialog(
-        context: context,
-        builder: (context) => GeneralDialog(
-          title: "SUSKSES",
-          titleColor: Colors.green.shade400,
-          desc: "Berhasil registrasi silahkan Login",
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      );
-    }, onError: (error) {
-      // Warning Dialog
-      showDialog(
-        context: context,
-        builder: (context) => GeneralDialog(
-            title: "GAGAL",
-            titleColor: Colors.red,
-            desc: "Registrasi gagal, silahkan coba lagi",
-            onPressed: () {
-              Navigator.pop(context);
-            }),
-      );
-    });
-
-    setState(() {
-      _isLoading = false;
-    });
-  }
+  Registrasi? registrasi;
 
   @override
   Widget build(BuildContext context) {
+    void _submit() {
+      setState(() {
+        _isLoading = true;
+      });
+      RegistrasiBloc.registrasi(
+        name: namaTextboxController.text,
+        email: emailTextboxController.text,
+        password: passwordTextboxController.text,
+        context: context,
+      );
+
+      setState(() {
+        _isLoading = false;
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Registrasi"),
@@ -130,6 +108,7 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
             ElevatedButton(
                 onPressed: () {
                   if (!_isLoading) _submit();
+                  print("");
                 },
                 child: Text("Registrasi"))
           ],

@@ -1,19 +1,24 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:tokokita/helpers/app_exception.dart';
 import 'package:tokokita/helpers/user_info.dart';
 import 'package:http/http.dart' as http;
-import 'package:tokokita/model/registrasi.dart';
 
 class Api {
   Future<dynamic> postRegistrasi({Uri? url, dynamic data}) async {
-    var response = await http.post(url ?? Uri.parse(""), body: data, headers: {
-      'Accept': 'application/json',
-    });
+    var responseJson;
+    try {
+      final response =
+          await http.post(url ?? Uri.parse(""), body: data, headers: {
+        'Accept': 'application/json',
+      });
+      responseJson = response;
+    } on SocketException {
+      throw FetchDataException('No Internet connection');
+    }
 
-    return response;
+    return responseJson;
   }
 
   Future<dynamic> post(Uri url, dynamic data) async {
