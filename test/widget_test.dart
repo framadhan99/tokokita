@@ -1,30 +1,30 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
+import 'dart:convert';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
 
-import 'package:tokokita/main.dart';
+void main() async {
+  await getData("wiwi", "wiwi@gmail.com", "wiwi123");
+}
 
-void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+Future getData(String name, String email, String password) async {
+  Uri url = Uri.parse("http://127.0.0.1:8000/api/users/register");
+  Map<String, String> requestHeaders = {
+    'Accept': 'application/json',
+  };
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  // String dataEncode = json.encode(dataRegister);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  var response = await http.post(url,
+      body: {
+        "name": name,
+        "email": email,
+        "password": password,
+      },
+      headers: requestHeaders);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });
+  var jsonObject = json.decode(response.body);
+
+  print(response.body);
+
+  return jsonObject;
 }

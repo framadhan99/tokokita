@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tokokita/model/list_produk.dart';
 import 'package:tokokita/model/produk.dart';
 import 'package:tokokita/ui/page/produk/detail_produk_page.dart';
@@ -12,55 +13,53 @@ class ProdukPage extends StatelessWidget {
   Widget build(BuildContext context) {
     ProdukList produk = ProdukList();
     return Scaffold(
-      appBar: AppBar(
-        title: Text("List Produk"),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ProdukFormPage()),
-              );
-            },
-            icon: Icon(Icons.add),
-          ),
-        ],
-      ),
-      drawer: Drawer(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 50),
-          child: ListTile(
-            title: Text("logout"),
-            trailing: Icon(Icons.logout),
-            onTap: () {},
+        appBar: AppBar(
+          title: Text("List Produk"),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProdukFormPage()),
+                );
+              },
+              icon: Icon(Icons.add),
+            ),
+          ],
+        ),
+        drawer: Drawer(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 50),
+            child: ListTile(
+              title: Text("logout"),
+              trailing: Icon(Icons.logout),
+              onTap: () {},
+            ),
           ),
         ),
-      ),
-      body: ListView(
-        children: [
-          ...List.generate(
-            produk.listProduk.length,
-            (index) => ItemProduk(
-              produk: Produk(
-                id: produk.listProduk[index].id,
-                kodeProduk: produk.listProduk[index].kodeProduk,
-                namaProduk: produk.listProduk[index].namaProduk,
-                hargaProduk: produk.listProduk[index].hargaProduk,
-              ),
-              onTap: () {
-                Navigator.push(
+        body: ListView(
+          children: [
+            ...List.generate(
+              produk.listProduk.length,
+              (index) => ItemProduk(
+                produk: Produk(
+                  id: produk.listProduk[index].id,
+                  kodeProduk: produk.listProduk[index].kodeProduk,
+                  namaProduk: produk.listProduk[index].namaProduk,
+                  hargaProduk: produk.listProduk[index].hargaProduk,
+                ),
+                onTap: () {
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => DetailProdukPage(
-                        produk: produk,
-                        index: index,
-                      ),
-                    ));
-              },
+                      builder: (context) =>
+                          DetailProdukPage(produk: produk, index: index),
+                    ),
+                  );
+                },
+              ),
             ),
-          )
-        ],
-      ),
-    );
+          ],
+        ));
   }
 }

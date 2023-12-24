@@ -1,19 +1,29 @@
+// To parse this JSON Registrasi, do
+//
+//     final registrasi = registrasiFromJson(jsonString);
+
+import 'dart:convert';
+
 class Registrasi {
-  int? code;
-  bool? status;
-  String? data;
+  final String name;
+  final String email;
+  final String password;
 
   Registrasi({
-    this.code,
-    this.status,
-    this.data,
+    required this.name,
+    required this.email,
+    required this.password,
   });
 
-  factory Registrasi.fromJson(Map<String, dynamic> obj) {
-    return Registrasi(
-      code: obj['code'],
-      status: obj['status'],
-      data: obj['data'],
-    );
-  }
+  factory Registrasi.fromJson(Map<String, dynamic> json) => Registrasi(
+        name: json["name"],
+        email: json["email"],
+        password: json["password"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "email": email,
+        "password": password,
+      };
 }

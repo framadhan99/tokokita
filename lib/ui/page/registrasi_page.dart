@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tokokita/bloc/registrasi_bloc.dart';
+import 'package:tokokita/model/registrasi.dart';
 import 'package:tokokita/ui/widget/general_textfield.dart';
 
 class RegistrasiPage extends StatefulWidget {
@@ -14,6 +16,19 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
   TextEditingController passwordTextboxController = TextEditingController();
   TextEditingController konfirmasiPasswordTextboxController =
       TextEditingController();
+  bool _isLoading = false;
+  void _submit() {
+    setState(() {
+      _isLoading = true;
+    });
+    RegistrasiBloc.registrasi(
+        name: namaTextboxController.text,
+        email: emailTextboxController.text,
+        password: passwordTextboxController.text);
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +59,6 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
               label: "Email",
               keyboardType: TextInputType.emailAddress,
               validator: (String? value) {
-                if (value != null && value.isNotEmpty) {
-                  return "Email harus diisi";
-                }
                 Pattern pattern =
                     r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
                 RegExp regex = RegExp(pattern.toString());
@@ -87,7 +99,11 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
               height: 30,
             ),
             // Button Registrasi
-            ElevatedButton(onPressed: () {}, child: Text("Registrasi"))
+            ElevatedButton(
+                onPressed: () {
+                  if (!_isLoading) _submit();
+                },
+                child: Text("Registrasi"))
           ],
         ),
       ),

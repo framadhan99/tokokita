@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:tokokita/model/list_produk.dart';
+import 'package:tokokita/ui/page/produk/edit_produk_page.dart';
 
 class DetailProdukPage extends StatelessWidget {
   const DetailProdukPage({
@@ -44,7 +45,16 @@ class DetailProdukPage extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.green),
                       child: Text("Edit"),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditProdukPage(
+                                produk: produk,
+                                index: index,
+                              ),
+                            ));
+                      },
                     ),
                     SizedBox(
                       width: 30,

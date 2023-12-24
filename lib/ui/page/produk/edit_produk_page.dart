@@ -1,14 +1,34 @@
 import 'package:flutter/material.dart';
+
+import 'package:tokokita/model/list_produk.dart';
+import 'package:tokokita/model/produk.dart';
 import 'package:tokokita/ui/widget/general_textfield.dart';
 
-class EditProdukPage extends StatelessWidget {
-  const EditProdukPage({super.key});
+class EditProdukPage extends StatefulWidget {
+  const EditProdukPage({
+    Key? key,
+    required this.produk,
+    required this.index,
+  }) : super(key: key);
+
+  final ProdukList produk;
+  final int index;
+
+  @override
+  State<EditProdukPage> createState() => _EditProdukPageState();
+}
+
+class _EditProdukPageState extends State<EditProdukPage> {
+  TextEditingController kodeProdukController = TextEditingController();
+  TextEditingController namaProdukController = TextEditingController();
+  TextEditingController hargaProdukController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController kodeProdukController = TextEditingController();
-    TextEditingController namaProdukController = TextEditingController();
-    TextEditingController hargaProdukController = TextEditingController();
     return Scaffold(
       appBar: AppBar(title: Text("Edit Produk")),
       body: Padding(
