@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tokokita/model/registrasi.dart';
-import 'package:tokokita/ui/page/login_page.dart';
 import 'package:tokokita/ui/page/registrasi_page.dart';
 
 void main() {

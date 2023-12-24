@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tokokita/bloc/registrasi_bloc.dart';
 import 'package:tokokita/model/registrasi.dart';
+import 'package:tokokita/ui/widget/general_dialog.dart';
 import 'package:tokokita/ui/widget/general_textfield.dart';
 
 class RegistrasiPage extends StatefulWidget {
@@ -22,9 +23,36 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
       _isLoading = true;
     });
     RegistrasiBloc.registrasi(
-        name: namaTextboxController.text,
-        email: emailTextboxController.text,
-        password: passwordTextboxController.text);
+            name: namaTextboxController.text,
+            email: emailTextboxController.text,
+            password: passwordTextboxController.text)
+        .then((value) {
+      // Sukses Dialog
+      return showDialog(
+        context: context,
+        builder: (context) => GeneralDialog(
+          title: "SUSKSES",
+          titleColor: Colors.green.shade400,
+          desc: "Berhasil registrasi silahkan Login",
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      );
+    }, onError: (error) {
+      // Warning Dialog
+      showDialog(
+        context: context,
+        builder: (context) => GeneralDialog(
+            title: "GAGAL",
+            titleColor: Colors.red,
+            desc: "Registrasi gagal, silahkan coba lagi",
+            onPressed: () {
+              Navigator.pop(context);
+            }),
+      );
+    });
+
     setState(() {
       _isLoading = false;
     });
