@@ -1,18 +1,47 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:tokokita/model/list_produk.dart';
-import 'package:tokokita/model/produk.dart';
+import 'package:tokokita/bloc/produk_bloc.dart';
 import 'package:tokokita/ui/widget/general_textfield.dart';
 
-class ProdukFormPage extends StatelessWidget {
+class ProdukFormPage extends StatefulWidget {
   const ProdukFormPage({super.key});
 
   @override
+  State<ProdukFormPage> createState() => _ProdukFormPageState();
+}
+
+class _ProdukFormPageState extends State<ProdukFormPage> {
+  TextEditingController kodeProdukController = TextEditingController();
+  TextEditingController namaProdukController = TextEditingController();
+  TextEditingController hargaProdukController = TextEditingController();
+  bool isLoading = false;
+
+  void _createSubmit() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    ProdukBloc.createProduk(
+      kodeProdukController.text,
+      namaProdukController.text,
+      hargaProdukController.text,
+    ).then((value) {
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: value == true
+              ? Text("Succesfuly create produk")
+              : Text("Succesfuly create produk"),
+        ),
+      );
+    });
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    TextEditingController kodeProdukController = TextEditingController();
-    TextEditingController namaProdukController = TextEditingController();
-    TextEditingController hargaProdukController = TextEditingController();
     return Scaffold(
       appBar: AppBar(title: Text("Produk Form")),
       body: Padding(
@@ -44,19 +73,7 @@ class ProdukFormPage extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                var id = Random();
-                ProdukList listProduk = ProdukList();
-
-                Produk produk = Produk(
-                  id: id.nextInt(100),
-                  kodeProduk: kodeProdukController.text,
-                  namaProduk: namaProdukController.text,
-                  hargaProduk: int.parse(hargaProdukController.text),
-                );
-
-                listProduk.listProduk.add(produk);
-
-                Navigator.pop(context);
+                if (!isLoading) _createSubmit();
               },
               child: Text("Save"),
             )

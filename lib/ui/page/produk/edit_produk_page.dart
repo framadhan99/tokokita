@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-
-import 'package:tokokita/model/list_produk.dart';
 import 'package:tokokita/model/produk.dart';
 import 'package:tokokita/ui/widget/general_textfield.dart';
 
 class EditProdukPage extends StatefulWidget {
   const EditProdukPage({
     Key? key,
-    required this.produk,
+    // required this.produk,
     required this.index,
   }) : super(key: key);
 
-  final ProdukList produk;
+  // final ProdukList produk;
   final int index;
 
   @override

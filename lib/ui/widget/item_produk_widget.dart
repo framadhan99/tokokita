@@ -6,11 +6,13 @@ import 'package:tokokita/ui/page/produk/detail_produk_page.dart';
 class ItemProduk extends StatelessWidget {
   const ItemProduk({
     Key? key,
-    required this.produk,
+    required this.title,
+    required this.subtitle,
     this.onTap,
   }) : super(key: key);
 
-  final Produk produk;
+  final String title;
+  final String subtitle;
   final Function()? onTap;
 
   @override
@@ -19,8 +21,8 @@ class ItemProduk extends StatelessWidget {
       onTap: onTap,
       child: Card(
         child: ListTile(
-          title: Text(produk.namaProduk ?? ""),
-          subtitle: Text(produk.hargaProduk.toString()),
+          title: Text(title),
+          subtitle: Text(subtitle),
         ),
       ),
     );
