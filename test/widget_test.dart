@@ -1,13 +1,16 @@
 import 'dart:convert';
 
+import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
+import 'package:tokokita/model/login.dart';
 
 void main() async {
-  await getData("wiwi", "wiwi@gmail.com", "wiwi123");
+  await getData("rere@gmail.com", "rere123")
+      .then((value) => print(value!.data!.token));
 }
 
-Future getData(String name, String email, String password) async {
-  Uri url = Uri.parse("http://127.0.0.1:8000/api/users/register");
+Future<Login?> getData(String email, String password) async {
+  Uri url = Uri.parse("http://127.0.0.1:8000/api/users/login");
   Map<String, String> requestHeaders = {
     'Accept': 'application/json',
   };
@@ -16,7 +19,6 @@ Future getData(String name, String email, String password) async {
 
   var response = await http.post(url,
       body: {
-        "name": name,
         "email": email,
         "password": password,
       },
@@ -26,5 +28,5 @@ Future getData(String name, String email, String password) async {
 
   print(response.body);
 
-  return jsonObject;
+  return Login.fromMap(jsonObject);
 }

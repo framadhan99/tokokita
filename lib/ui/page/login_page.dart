@@ -25,24 +25,28 @@ class _LoginPageState extends State<LoginPage> {
     });
     LoginBloc.login(
             email: emailTextController.text, password: passwordController.text)
-        .then((value) async {
-      await UserInfo().setToken(value!.data!.token!);
-      Navigator.pushReplacement(context, MaterialPageRoute(
-        builder: (context) {
-          return ProdukPage();
-        },
-      ));
+        .then((value) {
+      UserInfo().setToken(value!.data!.token.toString());
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProdukPage(),
+          ));
     }, onError: (error) {
       showDialog(
         context: context,
         builder: (context) => GeneralDialog(
-            title: "GAGAL",
+            title: "Gagal",
             titleColor: Colors.red,
-            desc: "Login gagal silahkan coba lagi",
+            desc: "Registrasi Gagal",
             onPressed: () {
               Navigator.pop(context);
             }),
       );
+    });
+
+    setState(() {
+      isLoading = false;
     });
   }
 
@@ -82,11 +86,7 @@ class _LoginPageState extends State<LoginPage> {
             // Button Registrasi
             ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ProdukPage(),
-                      ));
+                  if (!isLoading) _submit();
                 },
                 child: Text("Login")),
             SizedBox(

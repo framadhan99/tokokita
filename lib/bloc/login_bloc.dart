@@ -13,13 +13,26 @@ class LoginBloc {
     }, headers: {
       'Accept': 'application/json'
     });
+    var jsonObj = json.decode(response.body);
 
-    if (response.statusCode == 200) {
-      var jsonObj = json.decode(response.body);
-      return Login.fromJson(jsonObj);
-    } else {
-      print(response.body);
-    }
-    return null;
+    // if (response.statusCode == 200) {
+    //   Navigator.pushReplacement(
+    //       context!,
+    //       MaterialPageRoute(
+    //         builder: (context) => const ProdukPage(),
+    //       ));
+    // } else {
+    //   showDialog(
+    //     context: context!,
+    //     builder: (context) => GeneralDialog(
+    //         title: "Gagal",
+    //         titleColor: Colors.red,
+    //         desc: "Registrasi Gagal",
+    //         onPressed: () {
+    //           Navigator.pop(context);
+    //         }),
+    //   );
+    // }
+    return Login.fromMap(jsonObj);
   }
 }
