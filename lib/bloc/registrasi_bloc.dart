@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:tokokita/helpers/api.dart';
 import 'package:tokokita/helpers/api_url.dart';
 import 'package:tokokita/model/registrasi.dart';
 import 'package:http/http.dart' as http;

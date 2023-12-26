@@ -2,7 +2,7 @@ class ApiUrl {
   static const String baseUrl = "http://10.0.2.2/api";
 
   static const String registrasi = "http://10.0.2.2:8000/api/users/register";
-  static const String login = "$baseUrl/users/login";
+  static const String login = "http://10.0.2.2:8000/api/users/login";
   static const String listProduk = "$baseUrl/produk/list";
   static const String createProduk = "$baseUrl/produk/create";
 
