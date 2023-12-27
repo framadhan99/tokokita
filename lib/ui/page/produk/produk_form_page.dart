@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tokokita/bloc/produk_bloc.dart';
 import 'package:tokokita/ui/widget/general_textfield.dart';
 
 class ProdukFormPage extends StatefulWidget {
@@ -14,31 +13,6 @@ class _ProdukFormPageState extends State<ProdukFormPage> {
   TextEditingController namaProdukController = TextEditingController();
   TextEditingController hargaProdukController = TextEditingController();
   bool isLoading = false;
-
-  void _createSubmit() async {
-    setState(() {
-      isLoading = true;
-    });
-
-    ProdukBloc.createProduk(
-      kodeProdukController.text,
-      namaProdukController.text,
-      hargaProdukController.text,
-    ).then((value) {
-      Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: value == true
-              ? Text("Succesfuly create produk")
-              : Text("Succesfuly create produk"),
-        ),
-      );
-    });
-
-    setState(() {
-      isLoading = false;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,9 +46,7 @@ class _ProdukFormPageState extends State<ProdukFormPage> {
               height: 30,
             ),
             ElevatedButton(
-              onPressed: () {
-                if (!isLoading) _createSubmit();
-              },
+              onPressed: () {},
               child: Text("Save"),
             )
           ],

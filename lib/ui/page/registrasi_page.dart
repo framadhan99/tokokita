@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tokokita/bloc/registrasi_bloc.dart';
-import 'package:tokokita/model/registrasi.dart';
-import 'package:tokokita/ui/widget/general_dialog.dart';
 import 'package:tokokita/ui/widget/general_textfield.dart';
 
 class RegistrasiPage extends StatefulWidget {
@@ -18,36 +15,6 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
   TextEditingController konfirmasiPasswordTextboxController =
       TextEditingController();
   bool _isLoading = false; // variable untuk loading
-
-  void _submit() {
-    setState(() {
-      _isLoading = true;
-    });
-
-    RegistrasiBloc.registrasi(
-            name: namaTextboxController.text,
-            email: emailTextboxController.text,
-            password: konfirmasiPasswordTextboxController.text)
-        .then((value) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return GeneralDialog(
-            title: "SUKSES",
-            titleColor: Colors.green,
-            desc: value.message ?? "",
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          );
-        },
-      );
-    });
-
-    setState(() {
-      _isLoading = false;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,11 +86,9 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
             ),
             // Button Registrasi
             ElevatedButton(
-                onPressed: () {
-                  if (!_isLoading) _submit();
-                  print("");
-                },
-                child: Text("Registrasi"))
+              onPressed: () {},
+              child: Text("Registrasi"),
+            )
           ],
         ),
       ),
