@@ -24,26 +24,33 @@ class _LoginPageState extends State<LoginPage> {
       isLoading = true;
     });
     LoginBloc.login(
-            email: emailTextController.text, password: passwordController.text)
-        .then((value) {
-      UserInfo().setToken(value!.data!.token.toString());
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ProdukPage(),
-          ));
-    }, onError: (error) {
-      showDialog(
-        context: context,
-        builder: (context) => GeneralDialog(
-            title: "Gagal",
-            titleColor: Colors.red,
-            desc: "Registrasi Gagal",
-            onPressed: () {
-              Navigator.pop(context);
-            }),
-      );
-    });
+      email: emailTextController.text,
+      password: passwordController.text,
+    ).then(
+      (value) {
+        if (value == null) {
+          showDialog(
+            context: context,
+            builder: (context) => GeneralDialog(
+                title: "Gagal",
+                titleColor: Colors.red,
+                desc: "Silahkan login kembali",
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+          );
+        }
+        UserInfo().setToken(value!.data!.token
+            .toString()); // menyimpan token ke shared_preference
+
+        // beroindah ke Produk page
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProdukPage(),
+            ));
+      },
+    );
 
     setState(() {
       isLoading = false;
@@ -72,6 +79,7 @@ class _LoginPageState extends State<LoginPage> {
             // _passwordField
             GeneralTextField(
               controller: passwordController,
+              obscureText: true,
               label: "Password",
               validator: (String? value) {
                 if (value != null && value.isEmpty) {

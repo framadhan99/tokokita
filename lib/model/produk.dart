@@ -1,32 +1,5 @@
 import 'dart:convert';
 
-class ListProduk {
-  List<Produk?>? listProduk;
-  ListProduk({
-    this.listProduk,
-  });
-
-  Map<String, dynamic> toMap() {
-    return {
-      'listProduk': listProduk?.map((x) => x?.toMap()).toList(),
-    };
-  }
-
-  factory ListProduk.fromMap(Map<String, dynamic> map) {
-    return ListProduk(
-      listProduk: map['listProduk'] != null
-          ? List<Produk?>.from(
-              map['listProduk']?.map((x) => Produk?.fromMap(x)))
-          : null,
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory ListProduk.fromJson(String source) =>
-      ListProduk.fromMap(json.decode(source));
-}
-
 class Produk {
   int? id;
   String? kode_produk;

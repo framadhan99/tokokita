@@ -17,27 +17,40 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
   TextEditingController passwordTextboxController = TextEditingController();
   TextEditingController konfirmasiPasswordTextboxController =
       TextEditingController();
-  bool _isLoading = false;
-  Registrasi? registrasi;
+  bool _isLoading = false; // variable untuk loading
+
+  void _submit() {
+    setState(() {
+      _isLoading = true;
+    });
+
+    RegistrasiBloc.registrasi(
+            name: namaTextboxController.text,
+            email: emailTextboxController.text,
+            password: konfirmasiPasswordTextboxController.text)
+        .then((value) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return GeneralDialog(
+            title: "SUKSES",
+            titleColor: Colors.green,
+            desc: value.message ?? "",
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          );
+        },
+      );
+    });
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    void _submit() {
-      setState(() {
-        _isLoading = true;
-      });
-      RegistrasiBloc.registrasi(
-        name: namaTextboxController.text,
-        email: emailTextboxController.text,
-        password: passwordTextboxController.text,
-        context: context,
-      );
-
-      setState(() {
-        _isLoading = false;
-      });
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: Text("Registrasi"),

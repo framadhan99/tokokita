@@ -1,29 +1,68 @@
-// To parse this JSON Registrasi, do
-//
-//     final registrasi = registrasiFromJson(jsonString);
-
 import 'dart:convert';
 
 class Registrasi {
-  final String name;
-  final String email;
-  final String password;
-
+  int? code;
+  bool? status;
+  String? message;
+  Data? data;
   Registrasi({
-    required this.name,
-    required this.email,
-    required this.password,
+    this.code,
+    this.status,
+    this.message,
+    this.data,
   });
 
-  factory Registrasi.fromJson(Map<String, dynamic> json) => Registrasi(
-        name: json["name"],
-        email: json["email"],
-        password: json["password"],
-      );
+  Map<String, dynamic> toMap() {
+    return {
+      'code': code,
+      'status': status,
+      'message': message,
+      'data': data?.toMap(),
+    };
+  }
 
-  Map<String, dynamic> toJson() => {
-        "name": name,
-        "email": email,
-        "password": password,
-      };
+  factory Registrasi.fromMap(Map<String, dynamic> map) {
+    return Registrasi(
+      code: map['code']?.toInt(),
+      status: map['status'],
+      message: map['message'],
+      data: map['data'] != null ? Data.fromMap(map['data']) : null,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Registrasi.fromJson(String source) =>
+      Registrasi.fromMap(json.decode(source));
+}
+
+class Data {
+  int? id;
+  String? name;
+  String? email;
+  Data({
+    this.id,
+    this.name,
+    this.email,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'email': email,
+    };
+  }
+
+  factory Data.fromMap(Map<String, dynamic> map) {
+    return Data(
+      id: map['id']?.toInt(),
+      name: map['name'],
+      email: map['email'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Data.fromJson(String source) => Data.fromMap(json.decode(source));
 }

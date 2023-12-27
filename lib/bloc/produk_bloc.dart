@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:tokokita/helpers/api_url.dart';
 import 'package:tokokita/helpers/user_info.dart';
 import 'package:tokokita/model/produk.dart';
@@ -44,5 +43,38 @@ class ProdukBloc {
     print(jsonObj);
 
     return (jsonObj as Map<String, dynamic>)['status'];
+  }
+
+  static Future<bool> updateProduk(
+      int id, String? kodeProduk, String? namaProduk, String? harga) async {
+    String? token = await UserInfo().getToken();
+    Uri url = Uri.parse(ApiUrl.updateProduk(id));
+
+    var response = await http.post(url, body: {
+      'kode_produk': kodeProduk,
+      'nama_produk': namaProduk,
+      'harga': harga,
+    }, headers: {
+      'Accept': 'application/json',
+      'Authorization': token ?? "",
+    });
+
+    var jsonObj = json.decode(response.body);
+    return (jsonObj as Map<String, dynamic>)['status'];
+  }
+
+  static Future<String> delete(int id) async {
+    String? token = await UserInfo().getToken();
+    Uri url = Uri.parse(ApiUrl.deleteProduk(id));
+
+    var response = await http.post(url, headers: {
+      'Accept': 'application/json',
+      'Authorization': token ?? "",
+    });
+
+    var jsonObj = json.decode(response.body);
+    print(jsonObj);
+
+    return (jsonObj as Map<String, dynamic>)['message'];
   }
 }

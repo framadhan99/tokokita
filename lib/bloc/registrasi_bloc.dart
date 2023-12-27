@@ -1,51 +1,30 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:tokokita/helpers/api_url.dart';
 import 'package:tokokita/model/registrasi.dart';
 import 'package:http/http.dart' as http;
-import 'package:tokokita/ui/widget/general_dialog.dart';
 
 class RegistrasiBloc {
-  static Future<Registrasi> registrasi(
-      {String? name,
-      String? email,
-      String? password,
-      BuildContext? context}) async {
-    String api = ApiUrl.registrasi;
-    var apiUrl = Uri.parse(api);
+  static Future<Registrasi> registrasi({
+    // data yang akan di post ke rest Api register
+    String? name,
+    String? email,
+    String? password,
+  }) async {
+    // get api url
+    String api = ApiUrl.registrasi; // "$baseUrl/users/register"
+    var apiUrl = Uri.parse(api); // untuk convert tipe data string ke Uri
 
     var response = await http.post(apiUrl, body: {
-      "name": name,
-      "email": email,
-      "password": password,
+      'name': name,
+      'email': email,
+      'password': password,
+    }, headers: {
+      'Accept': 'application/json'
     });
-    var jsonObject = json.decode(response.body);
-    if (response.statusCode == 201) {
-      // ignore: use_build_context_synchronously
-      showDialog(
-        context: context!,
-        builder: (context) => GeneralDialog(
-            title: "SUKSES",
-            titleColor: Colors.green,
-            desc: "Registrasi Berhasil",
-            onPressed: () {
-              Navigator.pop(context);
-            }),
-      );
-    } else {
-      showDialog(
-        context: context!,
-        builder: (context) => GeneralDialog(
-            title: "Gagal",
-            titleColor: Colors.red,
-            desc: "Registrasi Gagal",
-            onPressed: () {
-              Navigator.pop(context);
-            }),
-      );
-    }
 
-    return Registrasi.fromJson(jsonObject);
+    var jsonObject = json.decode(response.body);
+
+    return Registrasi.fromMap(jsonObject);
   }
 }

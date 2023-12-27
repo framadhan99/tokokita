@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:tokokita/bloc/produk_bloc.dart';
 
 import 'package:tokokita/model/produk.dart';
+import 'package:tokokita/ui/page/produk/edit_produk_page.dart';
+import 'package:tokokita/ui/page/produk/produk_page.dart';
 
 class DetailProdukPage extends StatelessWidget {
   const DetailProdukPage({
@@ -42,14 +45,15 @@ class DetailProdukPage extends StatelessWidget {
                           backgroundColor: Colors.green),
                       child: Text("Edit"),
                       onPressed: () {
-                        //   Navigator.push(
-                        //       context,
-                        //       MaterialPageRoute(
-                        //         builder: (context) => EditProdukPage(
-                        //           produk: produk,
-                        //           index: index,
-                        //         ),
-                        //       ));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditProdukPage(
+                              id: produk.id ?? 0,
+                              produk: produk,
+                            ),
+                          ),
+                        );
                       },
                     ),
                     SizedBox(
@@ -58,7 +62,21 @@ class DetailProdukPage extends StatelessWidget {
                     ElevatedButton(
                       style:
                           ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                      onPressed: () {},
+                      onPressed: () async {
+                        await ProdukBloc.delete(produk.id!).then((value) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              duration: Duration(milliseconds: 300),
+                              content: Text("Berhasil di hapus"),
+                            ),
+                          );
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ProdukPage(),
+                              ));
+                        });
+                      },
                       child: Text("Delete"),
                     )
                   ],
